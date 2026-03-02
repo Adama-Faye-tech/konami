@@ -1,0 +1,14 @@
+{
+  "name": "konami-id",
+  "version": "1.0.0",
+  "description": "KONAMI ID - Plateforme d'authentification",
+  "main": "backnend.js",
+  "scripts": {
+    "start": "node backnend.js",
+    "dev": "node backnend.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.6",
+    "express": "^5.2.1"
+  }
+}

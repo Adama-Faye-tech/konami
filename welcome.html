@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KONAMI ID - Bienvenue</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .welcome-card {
+            background: white;
+            padding: 60px 40px;
+            border-radius: 10px;
+            text-align: center;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            max-width: 500px;
+            width: 100%;
+        }
+
+        .logo-text {
+            color: #c00010;
+            font-weight: bold;
+            font-size: 32px;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+        }
+
+        h1 {
+            color: #333;
+            font-size: 28px;
+            margin-bottom: 15px;
+        }
+
+        .checkmark {
+            font-size: 60px;
+            margin: 20px 0;
+        }
+
+        p {
+            color: #666;
+            font-size: 16px;
+            margin-bottom: 10px;
+        }
+
+        .user-email {
+            background: #f5f5f5;
+            padding: 15px;
+            border-radius: 4px;
+            margin: 20px 0;
+            color: #333;
+            font-weight: bold;
+        }
+
+        .btn-logout {
+            background-color: #c00010;
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 4px;
+            font-weight: bold;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 30px;
+            transition: background 0.2s;
+        }
+
+        .btn-logout:hover {
+            background-color: #a0000d;
+        }
+    </style>
+</head>
+<body>
+    <div class="welcome-card">
+        <div class="logo-text">KONAMI</div>
+        <h1>Bienvenue ! ✅</h1>
+        <div class="checkmark">✓</div>
+        <p>Vous êtes maintenant connecté à votre compte KONAMI ID</p>
+        <div class="user-email" id="userEmail">
+            Chargement...
+        </div>
+        <p style="font-size: 14px; color: #999;">Votre session est sécurisée et vérifiée.</p>
+        <button class="btn-logout" onclick="window.location.href='login.html'">Retour à la connexion</button>
+    </div>
+
+    <script>
+        // Récupérer l'email depuis sessionStorage (défini lors de la connexion réussie)
+        const userEmail = sessionStorage.getItem('currentUser');
+        if (userEmail) {
+            document.getElementById('userEmail').textContent = userEmail;
+        }
+    </script>
+</body>
+</html>

