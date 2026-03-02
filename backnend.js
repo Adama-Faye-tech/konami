@@ -9,7 +9,8 @@ app.use(express.json());
 app.use(express.static(__dirname));
 
 // Fichier de base de données
-const DB_FILE = path.join(__dirname, 'users_database.json');
+const dbPath = "/app/data/users_database.json";
+
 
 // Initialiser la base de données
 function initDatabase() {
